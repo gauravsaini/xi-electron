@@ -1,6 +1,6 @@
 {
   "rules": {
-    "curly": true,
+    "curly": [true, "ignore-same-line"],
     "eofline": false,
     "align": [true, "parameters"],
     "class-name": true,
@@ -28,7 +28,7 @@
     ],
     "semicolon": [true, "always"],
     "typedef-whitespace": [
-      true, 
+      true,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",

@@ -5,7 +5,7 @@ import { colorFromARBG } from '../utils/misc';
 // TODO: color/embolden gutter line number in active line
 // TODO: find a place/method for theming the frontend
 export const COLORS = {
-  CURSOR: '#AAAAAA',
+  CURSOR:     '#AAAAAA',
   BACKGROUND: '#2e2e2e',
   FOREGROUND: '#ffffff',
 };
@@ -25,7 +25,7 @@ export class Style {
 
   // TODO: will have to manually implement underlines in the canvas view!
   // TODO: and obviously will need to implement complete font for WebGL
-  fontString(metrics: FontMetrics) {
+  fontString(metrics: FontMetrics): string {
     return `${this.italic ? 'italic' : ''} ${this.weight} ${metrics.fontString()}`;
   }
 
@@ -89,12 +89,12 @@ export class StyleSpan {
 
     // Run over the style triplets and generate style spans for them.
     for (let i = 0; i < utf8Styles.length; i += 3) {
-      const start8 = pos8 + utf8Styles[i];
-      const end8 = start8 + utf8Styles[i + 1];
+      const start8  = pos8 + utf8Styles[i];
+      const end8    = start8 + utf8Styles[i + 1];
       const styleId = utf8Styles[i + 2];
 
       const start = utf8ToChIndices[start8];
-      const end = utf8ToChIndices[end8];
+      const end   = utf8ToChIndices[end8];
 
       if (start == undefined || end == undefined || end < start) {
         // TODO: how should we do error handling?
@@ -103,7 +103,7 @@ export class StyleSpan {
 
       styles.push(new StyleSpan(new Range(start, end - start), DefinedStyles[styleId]));
       pos8 = end8;
-      pos = end;
+      pos  = end;
     }
 
     // Create a blank span for any unstyled characters at the end of the line.

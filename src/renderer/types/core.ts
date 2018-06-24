@@ -16,6 +16,7 @@ export enum CoreMethod {
     INSERT                                             = 'insert',
     INSERT_NEWLINE                                     = 'insert_newline',
     INSERT_TAB                                         = 'insert_tab',
+    MODIFY_USER_CONFIG                                 = 'modify_user_config',
     MOVE_DOWN                                          = 'move_down',
     MOVE_DOWN_AND_MODIFY_SELECTION                     = 'move_down_and_modify_selection',
     MOVE_LEFT                                          = 'move_left',
@@ -57,12 +58,12 @@ export enum CoreMethod {
  * An enum of the responses we may receive from xi-core.
  */
 export enum CoreResponse {
-    AVAILABLE_PLUGINS = 'available_plugins',
-    AVAILABLE_THEMES  = 'available_themes',
-    CONFIG_CHANGED    = 'config_changed',
-    DEF_STYLE         = 'def_style',
-    SCROLL_TO         = 'scroll_to',
-    PLUGIN_STARTED    = 'plugin_started',
-    THEME_CHANGED     = 'theme_changed',
-    UPDATE            = 'update',
+    AVAILABLE_PLUGINS  = 'available_plugins',
+    AVAILABLE_THEMES   = 'available_themes',
+    CONFIG_CHANGED     = 'config_changed',
+    DEF_STYLE          = 'def_style',
+    SCROLL_TO          = 'scroll_to',
+    PLUGIN_STARTED     = 'plugin_started',
+    THEME_CHANGED      = 'theme_changed',
+    UPDATE             = 'update',
 }

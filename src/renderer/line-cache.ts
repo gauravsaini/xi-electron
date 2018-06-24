@@ -29,20 +29,19 @@ export class Line {
    */
   constructor(public text: string, utf8Styles: number[], cursors: number[]) {
     let pos = 0, pos8 = 0, pos16 = 0;
-    for (const ch of text) {
-      const codePoint = (<number>ch.codePointAt(0));
+    const replacmentPoint = '\uFFFD'.codePointAt(0);
+    // for (const ch of text) {
+    for (let len = text.length; pos < len; pos++) {
+      const codePoint = <number>(text.codePointAt(pos) || replacmentPoint);
 
       this.utf8ToChIndices[pos8] = pos;
       this.chTo8Indices.push(pos8);
-      if (codePoint < 0x80) {
-        pos8 += 1;
-      } else if (codePoint < 0x800) {
-        pos8 += 2;
-      } else if (codePoint < 0x10000) {
-        pos8 += 3;
-      } else if (codePoint < 0x110000) {
-        pos8 += 4;
-      } else {
+
+           if (codePoint < 0x80) pos8 += 1;
+      else if (codePoint < 0x800) pos8 += 2;
+      else if (codePoint < 0x10000) pos8 += 3;
+      else if (codePoint < 0x110000) pos8 += 4;
+      else {
         // TODO: replace char with \uFFFD (unicode replacement character) - that way we don't need
         // to throw here
         throw new Error('Char cannot be represented in JS.');
@@ -50,9 +49,7 @@ export class Line {
 
       this.utf16ToChIndices[pos16] = pos;
       this.chTo16Indices.push(pos16);
-      pos16 += ch.length;
-
-      pos += 1;
+      pos16 += text[pos].length;
     }
 
     this.utf8ToChIndices[pos8] = pos;
@@ -266,7 +263,7 @@ export default class LineCache extends EventEmitter {
     const ranges: Array<Array<number>> = [];
     last = Math.min(last, this.height());
 
-    if (first >= last) {
+    if ((first != 0 && last != 0) && first >= last) {
       console.error(`compute missing called with first (${first}) >= last (${last})`);
       return ranges;
     }

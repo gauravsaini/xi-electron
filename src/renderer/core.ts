@@ -82,7 +82,7 @@ export default class Core extends EventEmitter {
    */
 
   // Getters for easier access to streams.
-  private stdin() { return this.child.stdin; }
+  private stdin()  { return this.child.stdin;  }
   private stdout() { return this.child.stdout; }
   private stderr() { return this.child.stderr; }
 
@@ -114,7 +114,7 @@ export default class Core extends EventEmitter {
         case CoreResponse.THEME_CHANGED: {
           // TODO: respond to these
           // TODO: get python plugins working
-          // console.log(msg);
+          console.log(msg);
           return;
         }
         case CoreResponse.DEF_STYLE: {
