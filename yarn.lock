@@ -1803,7 +1803,7 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
-electron-download@^4.0.0:
+electron-download@^4.0.0, electron-download@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/electron-download/-/electron-download-4.1.0.tgz#bf932c746f2f87ffcc09d1dd472f2ff6b9187845"
   dependencies:
@@ -2078,6 +2078,14 @@ electron@1.8.2:
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^3.0.1"
+    extract-zip "^1.0.3"
+
+electron@^3.0.0-beta.1:
+  version "3.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-3.0.0-beta.1.tgz#235bfa30fd10020d79ec68f8c3bcebcc825fa78e"
+  dependencies:
+    "@types/node" "^8.0.24"
+    electron-download "^4.1.0"
     extract-zip "^1.0.3"
 
 elegant-spinner@^1.0.1:
