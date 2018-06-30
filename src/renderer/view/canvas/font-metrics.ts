@@ -1,4 +1,4 @@
-import { elt, removeChildrenAndAdd, removeChildren } from '../../../utils/dom';
+import { elt, removeChildrenAndAdd, /* removeChildren */ } from '../../../utils/dom';
 import EventEmitter from '../../../utils/emitter';
 
 export type FontOptions = {
@@ -111,8 +111,10 @@ export default class FontMetrics extends EventEmitter {
    */
   public stringWidth(str: string): number {
     let width = 0;
-    for (const ch of str) {
-      width += this.charWidth(ch);
+    // for (const ch of str) {
+    for (let i = 0, len = str.length; i < len; ++i) {
+      let char = str.charAt(i);
+      width += this.charWidth(char || '');
     }
     return width;
   }
