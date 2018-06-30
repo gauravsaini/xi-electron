@@ -265,7 +265,7 @@ export default class CanvasView implements View {
     this.lineCache.computeMissing(lineStart, lineEnd);
 
     const getLineData = (i: number) => ({
-      y: (lineHeight * i) - this.y,
+      y:    lineHeight * i - this.y,
       line: this.lineCache.get(i)
     });
 
@@ -282,21 +282,21 @@ export default class CanvasView implements View {
             const a = line.chTo16Indices[start];
             const b = line.chTo16Indices[start + length];
             const beforeTextWidth = this.metrics.stringWidth(line.text.substring(0, a));
-            const textWidth = this.metrics.stringWidth(line.text.substring(a, b));
+            const textWidth       = this.metrics.stringWidth(line.text.substring(a, b));
             this.ctx.fillRect(beforeTextWidth + xOffset, y, textWidth, lineHeight);
           });
         }
       };
 
-      renderBlock(line.styles.filter((span) => span.style.isSelection()));
-      renderBlock(line.styles.filter((span) => span.style.isHighlight()));
+      renderBlock(line.styles.filter(span => span.style.isSelection()));
+      renderBlock(line.styles.filter(span => span.style.isHighlight()));
     }
 
     // Second pass, for actually rendering text.
     this.ctx.save();
     for (let i = lineStart; i <= lineEnd; ++i) {
       const { line, y } = getLineData(i);
-      if (!line) { continue; }
+      if (!line) continue;
 
       // FIXME: TODO: bit of a hack atm, will need to reset when longest line is shortened...
       // See https://github.com/google/xi-editor/issues/479
@@ -316,7 +316,7 @@ export default class CanvasView implements View {
       // Draw text.
       let posX = 0;
       const textY = y + baseline;
-      for (let i = 0; i < line.styles.length; ++i) {
+      for (let i = 0, len = line.styles.length; i < len; ++i) {
         const { style, range: { start, length } } = line.styles[i];
         if (posX > xViewportEnd) { break; }
         if (style.isReservedStyle()) { continue; }
@@ -350,7 +350,7 @@ export default class CanvasView implements View {
         }
 
         // Skip style since it's not in the visible range.
-        if (posX < this.x) { continue; }
+        if (posX < this.x) continue;
 
         // Render the text with correct styling.
         const text = line.text.substring(line.chTo16Indices[a], line.chTo16Indices[b]);
@@ -380,8 +380,8 @@ export default class CanvasView implements View {
         if (!line) { continue; }
 
         // Right-align gutter text by prepending whitespace.
-        const text = `${i + 1}`.padStart(this.gutterChars, ' ');
-        this.ctx.fillText(text, gutterPadding[0] / 2, y + baseline);
+        const text = `${ i + 1 }`.padStart(this.gutterChars, ' ');
+        this.ctx.fillText(text, gutterPadding[0] >>> 1, y + baseline);
       }
     }
   }

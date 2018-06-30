@@ -37,8 +37,8 @@ export default class ViewController {
     this.wrapper.tabIndex = 0;
 
     this.hasFocus = false;
-    on(this.wrapper, 'blur', () => this.hasFocus = false, false);
-    on(this.wrapper, 'focus', () => this.hasFocus = true, false);
+    on(this.wrapper, 'blur',  () => this.hasFocus = false, false);
+    on(this.wrapper, 'focus', () => this.hasFocus = true,  false);
 
     this.lineCache = new LineCache();
 
