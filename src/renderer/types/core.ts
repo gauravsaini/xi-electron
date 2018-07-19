@@ -13,6 +13,7 @@ export enum CoreMethod {
     DELETE_WORD_FORWARD                                = 'delete_word_forward',
     DRAG                                               = 'drag',
     EDIT                                               = 'edit',
+    GESTURE                                            = 'gesture',
     INSERT                                             = 'insert',
     INSERT_NEWLINE                                     = 'insert_newline',
     INSERT_TAB                                         = 'insert_tab',

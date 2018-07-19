@@ -8,6 +8,9 @@ import ViewProxy from './view-proxy';
 import { CoreMethod } from './types/core';
 import { posIsClose, Point, clamp } from '../utils/misc';
 
+declare var ResizeObserver: any;
+type ResizeObserverEntry = any;
+
 // This module should be controlled by the "workspace" which has the xi-core running
 // it is linked to a view inside of xi-core via a "ViewProxy"
 export default class ViewController {
@@ -46,7 +49,6 @@ export default class ViewController {
 
     // Listen for resizes to the element with the new ResizeObserver feature.
     // TODO: add typings for ResizeObserver API.
-    type ResizeObserverEntry = any;
     const ro = new ResizeObserver((entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
         if (entry.target == this.wrapper) {
@@ -125,18 +127,19 @@ export default class ViewController {
       if (wasClose) {
         const { count } = this.clicks;
         this.clicks.last = now;
-        this.clicks.count = count == 3 ? 1 : count + 1;
+        this.clicks.count = (count & 3) + 1;
         this.clicks.point = point;
       }
     }
 
-    // TOOD: get all different mods (enum?)
-    const mod = event.shiftKey ? 2 : 0;
+    let mod = 0;
+    if (event.altKey)   mod = 1;
+    if (event.shiftKey) mod = 2;
 
-    const [line, char] = this.view.posFromCoords(point.x, point.y, false);
-    this.click(line, char, mod, this.clicks.count);
+    const [line, column] = this.view.posFromCoords(point.x, point.y, false);
+    this.click(line, column, mod, this.clicks.count);
 
-    return [line, char];
+    return [line, column];
   }
 
   /**
@@ -149,11 +152,12 @@ export default class ViewController {
       y: clamp(event.clientY - top, 0, height),
     };
 
-    // TOOD: get all different mods (enum?)
-    const mod = event.shiftKey ? 2 : 0;
+    let mod = 0;
+    if (event.altKey)   mod = 1;
+    if (event.shiftKey) mod = 2;
 
-    const [line, char] = this.view.posFromCoords(point.x, point.y, false);
-    this.drag(line, char, mod);
+    const [line, column] = this.view.posFromCoords(point.x, point.y, false);
+    this.drag(line, column, mod);
   }
 
   /**
@@ -207,22 +211,35 @@ export default class ViewController {
   /**
    * Send click information to xi-core.
    * @param  {Number} line  The line for xi-core.
-   * @param  {Number} char  The char for xi-core.
+   * @param  {Number} col   The col for xi-core.
    * @param  {Number} mod   The click modifier for xi-core.
    * @param  {Number} count This is the nth click.
    */
-  private click(line: number, char: number, mod: number, count: number): void {
-    this.edit(CoreMethod.CLICK, [line, char, mod, count]);
+  private click(line: number, col: number, mod: number, count: number): void {
+    switch (mod) {
+      case 2: { // Shift key
+        this.edit(CoreMethod.GESTURE, { line, col, ty: 'range_select' });
+        break;
+      }
+      default: {
+        this.edit(CoreMethod.GESTURE, { line, col, ty: count == 1 ? 'point_select' : 'word_select' });
+      }
+    }
   }
 
   /**
    * Send drag information to xi-core.
    * @param  {Number} line See `this.click()`.
-   * @param  {Number} char See `this.click()`.
+   * @param  {Number} col  See `this.click()`.
    * @param  {Number} mod  See `this.click()`.
    */
   private drag(line: number, char: number, mod: number): void {
-    this.edit(CoreMethod.DRAG, [line, char, mod]);
+    if (mod == 1) {
+      this.edit(CoreMethod.GESTURE, { line, col: char, ty: 'multi_line_select' });
+    } else {
+      this.edit(CoreMethod.DRAG, [line, char, mod]);
+      // this.edit(CoreMethod.GESTURE, { line, col: char, ty: 'toggle_sel' });
+    }
   }
 
   /**

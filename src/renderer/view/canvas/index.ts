@@ -168,7 +168,7 @@ export default class CanvasView implements View {
    * @param  {Number}  y       The y coordinate (relative to the view).
    * @return {Array}           A [line, char] object of the coordinates at the point.
    */
-  public posFromCoords(x: number, y: number): [number, number] {
+  public posFromCoords(x: number, y: number, rect: boolean): [number, number] {
     const lineHeight = this.metrics.lineHeight();
     const lineNo = Math.round(((y + this.y) - (lineHeight / 2)) / lineHeight);
     const line = this.lineCache.get(lineNo);

@@ -143,7 +143,7 @@ export default class DOMView implements View {
     this.sizer.scrollLeft = this.metrics.asciiWidth() * char;
   }
 
-  public posFromCoords(x: number, y: number): [number, number] {
+  public posFromCoords(x: number, y: number, rect: boolean): [number, number] {
     return [0, 0];
   }
 
