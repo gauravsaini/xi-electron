@@ -73,7 +73,7 @@
     "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.0.3",
+    "@types/electron-devtools-installer": "^2.2.0",
     "electron": "^3.0.0-beta.3",
     "electron-devtools-installer": "^2.2.4",
     "electron-forge": "^5.2.2",

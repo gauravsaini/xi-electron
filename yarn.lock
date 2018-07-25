@@ -51,9 +51,9 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@types/electron-devtools-installer@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@types/electron-devtools-installer/-/electron-devtools-installer-2.0.3.tgz#905b9f7d9762fa9bfa5fc87ad6cb81945a0dfc79"
+"@types/electron-devtools-installer@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/electron-devtools-installer/-/electron-devtools-installer-2.2.0.tgz#32ee4ebbe99b3daf9847a6d2097dc00b5de94f10"
 
 "@types/node@^7.0.12":
   version "7.0.66"
