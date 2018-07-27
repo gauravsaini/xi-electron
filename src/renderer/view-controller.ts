@@ -35,8 +35,9 @@ export default class ViewController {
    */
   constructor(workspace: Workspace, private proxy: ViewProxy, opts: ViewOptions) {
     this.wrapper = workspace.wrapper.appendChild(elt('div', null, 'xi-view', 'height: 100%; width: 100%'));
-    this.wrapper.style.border = '1px solid #000';
+    this.wrapper.style.border   = '1px solid #000';
     this.wrapper.style.overflow = 'hidden';
+    this.wrapper.style.cursor   = 'text'; // TODO use custom color
     this.wrapper.tabIndex = 0;
 
     this.hasFocus = false;
@@ -126,7 +127,7 @@ export default class ViewController {
       const wasClose = posIsClose(point, this.clicks.point);
       if (wasClose) {
         const { count } = this.clicks;
-        this.clicks.last = now;
+        this.clicks.last  = now;
         this.clicks.count = (count & 3) + 1;
         this.clicks.point = point;
       }
@@ -149,7 +150,7 @@ export default class ViewController {
     const { left, top, width, height } = this.wrapper.getBoundingClientRect();
     const point = {
       x: clamp(event.clientX - left, 0, width),
-      y: clamp(event.clientY - top, 0, height),
+      y: clamp(event.clientY - top,  0, height),
     };
 
     let mod = 0;
@@ -234,11 +235,10 @@ export default class ViewController {
    * @param  {Number} mod  See `this.click()`.
    */
   private drag(line: number, char: number, mod: number): void {
-    if (mod == 1) {
-      this.edit(CoreMethod.GESTURE, { line, col: char, ty: 'multi_line_select' });
+    if (mod == 1) { // Alt key
+      this.edit(CoreMethod.GESTURE, { line, col: char, ty: 'multi_line_select' }); // TODO blocked by xi-core
     } else {
       this.edit(CoreMethod.DRAG, [line, char, mod]);
-      // this.edit(CoreMethod.GESTURE, { line, col: char, ty: 'toggle_sel' });
     }
   }
 
