@@ -68,7 +68,7 @@ export default class CanvasView implements View {
 
     this.metrics = new FontMetrics(this.wrapper, {
       family: 'monospace',
-      size: 20
+      size:   15
     });
 
     // Apply custom options.
@@ -232,14 +232,14 @@ export default class CanvasView implements View {
    * @return {Object} An object with measurements about the current viewport.
    */
   public getViewport(): Viewport {
-    const asciiWidth = this.metrics.asciiWidth();
-    const lineHeight = this.metrics.lineHeight();
-    const xOffset = this.gutterWidth - this.editorPadding[0];
+    const asciiWidth = this.metrics.asciiWidth() || 1.0;
+    const lineHeight = this.metrics.lineHeight() || 1.0;
+    const xOffset    = this.gutterWidth - this.editorPadding[0];
     return {
       lineStart: Math.floor(this.y / lineHeight),
-      lineEnd: Math.floor((this.height + this.y) / lineHeight),
+      lineEnd:   Math.floor((this.height + this.y) / lineHeight),
       charStart: Math.floor(this.x / asciiWidth),
-      charEnd: Math.floor((this.width + this.x - xOffset) / asciiWidth),
+      charEnd:   Math.floor((this.width + this.x - xOffset) / asciiWidth),
     };
   }
 
@@ -247,10 +247,10 @@ export default class CanvasView implements View {
    * Renders the document onto the canvas.
    */
   public render() {
-    const baseline = this.metrics.baseline();
+    const baseline   = this.metrics.baseline();
     const lineHeight = this.metrics.lineHeight();
     const { editorPadding, gutterPadding, gutterWidth } = this;
-    const xOffset = gutterWidth + editorPadding[0] - this.x;
+    const xOffset      = gutterWidth + editorPadding[0] - this.x;
     const xViewportEnd = this.width + this.x - xOffset;
 
     // Reset canvas.

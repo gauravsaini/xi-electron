@@ -37,7 +37,7 @@ export default class ViewController {
     this.wrapper = workspace.wrapper.appendChild(elt('div', null, 'xi-view', 'height: 100%; width: 100%'));
     this.wrapper.style.border   = '1px solid #000';
     this.wrapper.style.overflow = 'hidden';
-    this.wrapper.style.cursor   = 'text'; // TODO use custom color
+    this.wrapper.style.cursor   = 'text'; // TODO use custom cursor url
     this.wrapper.tabIndex = 0;
 
     this.hasFocus = false;
@@ -48,26 +48,26 @@ export default class ViewController {
 
     this.view = createView(this, opts);
 
+    const { width, height } = this.wrapper.getBoundingClientRect();
+    this.view.resize(width, height);
+    this.updateViewport();
+
     // Listen for resizes to the element with the new ResizeObserver feature.
     // TODO: add typings for ResizeObserver API.
     const ro = new ResizeObserver((entries: ResizeObserverEntry[]) => {
       for (const entry of entries) {
-        if (entry.target == this.wrapper) {
+        if (entry.target === this.wrapper) {
           const { width, height } = entry.contentRect;
           this.view.resize(width, height);
           this.updateViewport();
         }
       }
     });
+
     ro.observe(this.wrapper);
 
-    const { width, height } = this.wrapper.getBoundingClientRect();
-    this.view.resize(width, height);
-
-    this.proxy.on('update', this.update.bind(this));
+    this.proxy.on('update',    this.update.bind(this));
     this.proxy.on('scroll_to', this.scrollTo.bind(this));
-
-    this.updateViewport();
   }
 
   /**

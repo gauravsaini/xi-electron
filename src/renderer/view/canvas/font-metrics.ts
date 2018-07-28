@@ -43,7 +43,7 @@ export default class FontMetrics extends EventEmitter {
     super();
 
     this.measure = element.appendChild(elt('div', null, 'xi-measure'));
-    this.measure.style.position = 'absolute';
+    this.measure.style.position   = 'absolute';
     this.measure.style.whiteSpace = 'nowrap';
     this.measure.style.visibility = 'hidden';
 
@@ -69,14 +69,14 @@ export default class FontMetrics extends EventEmitter {
    */
   public update(opts: FontOptions) {
     if (opts.family) { this.familyValue = opts.family; }
-    if (opts.size) { this.sizeValue = opts.size; }
+    if (opts.size)   { this.sizeValue   = opts.size;   }
 
     const fontString = this.fontString();
     this.ctx.font = this.measure.style.font = fontString;
 
     // Purge cached values which are now inaccurate.
     this.cachedWidths = {};
-    if (this.cachedBaseline != null) { this.baseline(true); }
+    if (this.cachedBaseline   != null) { this.baseline(true); }
     if (this.cachedAsciiWidth != null) { this.asciiWidth(true); }
     if (this.cachedLineHeight != null) { this.lineHeight(true); }
 
