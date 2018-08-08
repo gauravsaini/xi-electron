@@ -13,7 +13,6 @@ if (DEVMODE) {
 let win: BrowserWindow | null = null;
 
 app.on('ready', async () => {
-
   win = new BrowserWindow({
     show: true,
     webPreferences: {
@@ -23,5 +22,4 @@ app.on('ready', async () => {
   });
   win.loadURL('file://' + path.join(__dirname, '..', 'pages', 'index.html'));
   win.on('close', () => win = null);
-
 });

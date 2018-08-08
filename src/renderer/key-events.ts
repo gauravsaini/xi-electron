@@ -47,6 +47,7 @@ export const keyMap: { [key: string]: CoreMethod } = {
   [`Alt+ArrowRight`]:                CoreMethod.MOVE_WORD_RIGHT,
   [`Shift+Alt+ArrowRight`]:          CoreMethod.MOVE_WORD_RIGHT_AND_MODIFY_SELECTION,
   [`${CmdOrCtrl}+A`]:                CoreMethod.SELECT_ALL,
+  [`${CmdOrCtrl}+Shift+L`]:          CoreMethod.SPLIT_SELECTION_INTO_LINES,
 };
 
 function normalizeKey(input: string): string {
