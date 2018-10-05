@@ -1,5 +1,7 @@
 # Xi Electron
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/gauravsaini/xi-electron.svg)](https://greenkeeper.io/)
+
 _A front-end for the xi-editor built with modern web technologies._
 
 NOTE: This is still a WIP!
