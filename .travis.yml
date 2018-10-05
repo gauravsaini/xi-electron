@@ -24,6 +24,7 @@ branches:
   only:
   - master
   - /^v\d+\.\d+\.\d+/
+  - /^greenkeeper/.*$/
 
 install:
 - curl -sSf https://sh.rustup.rs > ./rustup.sh
